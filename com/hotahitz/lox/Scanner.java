@@ -44,14 +44,14 @@ class Scanner{
   List<Token> scanTokens(){
     while(!isAtEnd()){
       start = current;
-      scanTokens();
+      scanToken();
     }
 
     tokens.add(new Token(EOF,"",null,line));
-    retuns tokens;
+    return tokens;
   }
 
-  private void scanTokens(){
+  private void scanToken(){
     char c = advance();
     switch(c){
       case '(':addToken(LEFT_PAREN);break;
@@ -104,7 +104,7 @@ class Scanner{
     String text = source.substring(start, current);
 
     TokenType type = keywords.get(text);
-    if(type == null) type==IDENTIFIER;
+    if(type == null) type=IDENTIFIER;
     addToken(type);
   }
 
@@ -140,7 +140,7 @@ class Scanner{
       advance();
     }
     if(isAtEnd()){
-      Lox.error(Line,"Unterminated string.");
+      Lox.error(line,"Unterminated string.");
       return;
     }
 
@@ -169,6 +169,11 @@ class Scanner{
 
   private boolean isAtEnd(){
     return current >= source.length();
+  }
+
+  private char advance(){
+    current++;
+    return source.charAt(current-1);
   }
 
   private void addToken(TokenType type){
