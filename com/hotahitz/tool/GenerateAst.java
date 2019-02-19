@@ -13,7 +13,7 @@ public class GenerateAst {
     }
     String outputDir = args[0];
 
-    defineAst(outputDir, "expr", Arrays.asList(
+    defineAst(outputDir, "Expr", Arrays.asList(
       "Binary : Expr left, Token operator, Expr right",
       "Grouping: Expr expression",
       "Literal: Object value",
@@ -52,14 +52,14 @@ public class GenerateAst {
         writer.println("    R visit"+typeName+baseName+"("+
           typeName+" "+baseName.toLowerCase()+");");
       }
-      writer.println(".}");
+      writer.println("}");
     }
 
     private static void defineType(
       PrintWriter writer, String baseName,
       String className, String fieldList
     ){
-      writer.println(" static class "+className+" extends "+baseName+" {}");
+      writer.println(" static class "+className+" extends "+baseName+" {");
       writer.println("  "+className+"("+fieldList+") {");
       String[] fields = fieldList.split(", ");
       for(String field : fields){
